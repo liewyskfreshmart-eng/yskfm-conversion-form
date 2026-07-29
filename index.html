@@ -275,9 +275,13 @@
     </div>
 
     <div class="card">
-      <div class="field" style="margin-bottom:0;">
+      <div class="field">
         <label>Total Number of Pig</label>
         <input type="number" step="1" min="0" id="totalPig" placeholder="0">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Pig Purchase Weight (KG) — Whole Pig received today</label>
+        <input type="number" step="0.1" min="0" id="pigPurchaseWeight" placeholder="0.0">
       </div>
     </div>
 
@@ -486,10 +490,11 @@ async function submitForm(){
   });
 
   const totalPig = parseInt(document.getElementById('totalPig').value) || 0;
+  const pigPurchaseWeight = parseFloat(document.getElementById('pigPurchaseWeight').value) || 0;
 
   const entry = {
     outlet, date, reportBy,
-    weights, pcs, totalPig,
+    weights, pcs, totalPig, pigPurchaseWeight,
     total: Math.round(total*10)/10,
     submittedAt: new Date().toISOString()
   };
@@ -571,6 +576,9 @@ function showDetail(entry){
       </div>
       <div class="total-box" style="margin-top:8px; background:var(--gold);">
         <span>TOTAL NUMBER OF PIG</span><span class="val" style="color:#fff;">${entry.totalPig || 0}</span>
+      </div>
+      <div class="total-box" style="margin-top:8px; background:var(--navy-light);">
+        <span>PIG PURCHASE WEIGHT</span><span class="val">${entry.pigPurchaseWeight || 0} kg</span>
       </div>
     </div>
   `;
