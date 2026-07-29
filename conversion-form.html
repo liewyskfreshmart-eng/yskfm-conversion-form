@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YSK Freshmart SDN BHD - Conversion Form</title>
+<style>
+  :root{
+    --navy:#1c2b3a;
+    --navy-light:#2f4358;
+    --gold:#b8863b;
+    --gold-light:#e0b877;
+    --bg:#f5f3ef;
+    --card:#ffffff;
+    --border:#dcd6cb;
+    --text:#242220;
+    --muted:#7a7368;
+    --good:#3d7a4f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+  header{
+    background:var(--navy);
+    color:#fff;
+    padding:18px 16px 14px;
+    text-align:center;
+  }
+  header h1{
+    margin:0;
+    font-size:18px;
+    letter-spacing:0.5px;
+    font-weight:700;
+  }
+  header p{
+    margin:4px 0 0;
+    font-size:12px;
+    color:#c9d2db;
+  }
+  .tabs{
+    display:flex;
+    background:var(--navy-light);
+  }
+  .tab{
+    flex:1;
+    text-align:center;
+    padding:12px 8px;
+    color:#dfe6ec;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+  }
+  .tab.active{
+    background:var(--bg);
+    color:var(--navy);
+    border-bottom:3px solid var(--gold);
+  }
+  main{
+    max-width:640px;
+    margin:0 auto;
+    padding:16px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .field{
+    margin-bottom:12px;
+  }
+  label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    color:var(--muted);
+    margin-bottom:4px;
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+  }
+  input[type=text], input[type=date], select{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:15px;
+    background:#fff;
+    color:var(--text);
+  }
+  input[type=number]{
+    width:100%;
+    padding:9px 10px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:15px;
+    text-align:right;
+  }
+  .section-title{
+    font-size:13px;
+    font-weight:700;
+    color:var(--navy);
+    margin:18px 0 8px;
+    padding-bottom:6px;
+    border-bottom:2px solid var(--gold-light);
+  }
+  .item-row{
+    display:grid;
+    grid-template-columns:1fr 90px;
+    gap:10px;
+    align-items:center;
+    padding:8px 0;
+    border-bottom:1px solid #f0ede6;
+  }
+  .item-row:last-child{border-bottom:none;}
+  .item-name{
+    font-size:14px;
+    line-height:1.3;
+  }
+  .item-name .en{font-weight:600;}
+  .item-name .cn{color:var(--muted);font-size:12.5px;}
+  .no{
+    display:inline-block;
+    width:20px;
+    color:var(--gold);
+    font-weight:700;
+    font-size:12px;
+  }
+  .total-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--navy);
+    color:#fff;
+    padding:12px 16px;
+    border-radius:8px;
+    margin-top:6px;
+    font-weight:700;
+  }
+  .total-box .val{
+    font-size:20px;
+    color:var(--gold-light);
+  }
+  button.primary{
+    width:100%;
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  button.primary:active{background:var(--navy-light);}
+  .msg{
+    text-align:center;
+    padding:10px;
+    border-radius:8px;
+    margin-top:10px;
+    font-size:14px;
+    font-weight:600;
+  }
+  .msg.ok{background:#e6f3e9;color:var(--good);}
+  .msg.err{background:#fbe9e7;color:#b3392c;}
+  .hist-controls{
+    display:flex;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .hist-controls select{flex:2;}
+  .entry-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:10px;
+    cursor:pointer;
+  }
+  .entry-top{
+    display:flex;
+    justify-content:space-between;
+    font-weight:700;
+    color:var(--navy);
+    font-size:15px;
+  }
+  .entry-sub{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:3px;
+  }
+  .empty{
+    text-align:center;
+    color:var(--muted);
+    padding:40px 20px;
+    font-size:14px;
+  }
+  .detail-back{
+    background:none;
+    border:none;
+    color:var(--navy);
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    padding:4px 0 12px;
+  }
+  .detail-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:6px 10px;
+    font-size:14px;
+  }
+  .detail-grid .k{color:var(--muted);}
+  .detail-grid .v{font-weight:600;text-align:right;}
+  .loading{text-align:center;color:var(--muted);padding:20px;font-size:13px;}
+  .note{
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:10px;
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>YSK FRESHMART SDN BHD</h1>
+  <p>Daily Conversion Form — Sample Digital Version</p>
+</header>
+
+<div class="tabs">
+  <div class="tab active" id="tabFillBtn" onclick="showTab('fill')">📝 Fill Form</div>
+  <div class="tab" id="tabHistBtn" onclick="showTab('history')">📅 View History</div>
+</div>
+
+<main>
+
+  <!-- FILL FORM TAB -->
+  <div id="tabFill">
+    <div class="card">
+      <div class="field">
+        <label>Outlet</label>
+        <select id="outlet">
+          <option value="">-- Select Outlet --</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="date" id="date">
+      </div>
+      <div class="field">
+        <label>Report By (Name)</label>
+        <input type="text" id="reportBy" placeholder="Your name">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Weight Items (KG)</div>
+      <div id="weightItems"></div>
+      <div class="total-box">
+        <span>TOTAL</span>
+        <span class="val" id="totalDisplay">0.0 kg</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Count Items (PCS)</div>
+      <div id="pcsItems"></div>
+    </div>
+
+    <div class="card">
+      <div class="field" style="margin-bottom:0;">
+        <label>Total Number of Pig</label>
+        <input type="number" step="1" min="0" id="totalPig" placeholder="0">
+      </div>
+    </div>
+
+    <button class="primary" onclick="submitForm()">Submit to HQ</button>
+    <div id="submitMsg"></div>
+    <p class="note">Data is saved directly to your company Google Sheet. HQ can open that Sheet anytime to view, filter, or analyze all outlets' data.</p>
+  </div>
+
+  <!-- HISTORY TAB -->
+  <div id="tabHist" style="display:none;">
+    <div id="histList">
+      <div class="hist-controls">
+        <select id="histOutlet" onchange="loadHistory()">
+          <option value="">-- Select Outlet --</option>
+        </select>
+      </div>
+      <div id="histResults"><div class="empty">Select an outlet to view its submission history.</div></div>
+    </div>
+    <div id="histDetail" style="display:none;"></div>
+  </div>
+
+</main>
+
+<script>
+// ⚙️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE (see setup guide)
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUvkw23_uX077SSe1j-NQzyIbuxgppM_d1kkjxq4yZxexuEAoo1J9ma6CooVWo2wtZ/exec";
+
+const OUTLETS = [
+  "L01 TAMAN MUDA",
+  "L02 PUCHONG",
+  "L03 KAJANG",
+  "L04 ALAM DAMAI",
+  "L05 RAWANG",
+  "L07 PJ-SS2",
+  "L08 YULEK",
+  "L09 SERI KEMBANGAN",
+  "L10 PEKAN AMPANG",
+  "L11 TAMAN OUG",
+  "L12 TAMAN MIDAH",
+  "L13 KL-KEPONG BARU",
+  "L14 BANDAR SUNGAI LONG",
+  "L15 SETAPAK",
+  "L16 KG BARU SEMENYIH",
+  "L17 SRI PETALING",
+  "L18 SUBANG JAYA SS15",
+  "L19 KOTA KEMUNING",
+  "L20 KUCHAI LAMA",
+  "L21 DESA JAYA",
+  "L22 PJ-SEKSYEN 17",
+  "L23 MAHKOTA CHERAS",
+  "L24 KLANG JAYA",
+  "L25 PJ OLD TOWN",
+  "L26 SEREMBAN",
+  "L27 TMN KINARA",
+  "L28 SUNGAI WAY",
+  "L29 TAMAN ENG ANN",
+  "L30 SUNGAI BULOH",
+  "L31 SEA PARK",
+  "L32 SENTUL",
+  "L33 PUDU",
+  "L34 SERI GOMBAK",
+  "L35 SELAYANG JAYA",
+  "L36 BENTONG, PAHANG",
+  "L37-TTD"
+];
+
+const WEIGHT_ITEMS = [
+  {no:1, en:"Belly", cn:"花肉 Fayok"},
+  {no:2, en:"Fillet", cn:"梅肉 Moiyok"},
+  {no:3, en:"Lean Meat/Leg Boneless", cn:"瘦肉/後腿肉 Sauyok/Hau Pei"},
+  {no:4, en:"Loin Pork", cn:"肉眼 Yokngan"},
+  {no:5, en:"Pork Shoulder", cn:"上肉 Siongyok"},
+  {no:6, en:"Shoulder Loin", cn:"中咀 Chon Choi"},
+  {no:7, en:"Shoulder Arm", cn:"豬諍肉 Chi Chang"},
+  {no:8, en:"Foreleg", cn:"豬手 Chi Sau"},
+  {no:9, en:"Hindleg", cn:"豬腳 Chi Kiok"},
+  {no:10, en:"Marrow Bone", cn:"大骨頭 Kosong Kuat"},
+  {no:11, en:"Neck Bone", cn:"頸骨"},
+  {no:12, en:"Ribs", cn:"排骨 Pai Kuat"},
+  {no:13, en:"Soup Bone", cn:"湯骨/碎骨 Pow Tong Kuat"},
+  {no:14, en:"Tail/Tail Bone", cn:"豬尾/豬尾骨 Chemai/Chemaikuat"},
+  {no:15, en:"Minced Meat", cn:"肉碎 Yok Soi"},
+  {no:16, en:"Lard", cn:"豬油 Che Yau"},
+  {no:17, en:"Leaf Lard", cn:"板油 Pan Yau"},
+  {no:18, en:"Mixed Lard", cn:"杂油 Chap Yau"},
+  {no:19, en:"Pig Ears", cn:"豬耳朵 Che Yee"},
+  {no:20, en:"Pig Head", cn:"豬頭 Che Tau"},
+  {no:21, en:"Pork Jowl", cn:"兜肉 Tau Yok"},
+  {no:22, en:"Kidney", cn:"豬腰 Che Yew"},
+  {no:23, en:"Ribs with Belly", cn:"加厚骨"},
+  {no:24, en:"Wastage", cn:"Sampah"},
+];
+
+const PCS_ITEMS = [
+  {no:25, en:"Heart", cn:"豬心 Che Sam"},
+  {no:26, en:"Tongue", cn:"豬舌頭 Che Lei"},
+  {no:27, en:"Liver", cn:"猪肝 Che Yon"},
+  {no:28, en:"Pig Maw", cn:"豬肚 Che Tou"},
+  {no:29, en:"Intestines", cn:"粉腸 Fan Cheong"},
+  {no:30, en:"Raw Intestine", cn:"生肠"},
+];
+
+function populateOutlets(){
+  const sels = [document.getElementById('outlet'), document.getElementById('histOutlet')];
+  sels.forEach(sel=>{
+    OUTLETS.forEach(o=>{
+      const opt = document.createElement('option');
+      opt.value = o; opt.textContent = o;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+function applyOutletLock(){
+  const params = new URLSearchParams(window.location.search);
+  const locked = params.get('outlet');
+  if(!locked || !OUTLETS.includes(locked)) return; // no lock: show full dropdown (HQ/admin view)
+
+  // Fill Form: replace dropdown with a fixed, read-only display
+  const outletField = document.getElementById('outlet').closest('.field');
+  outletField.innerHTML = `
+    <label>Outlet</label>
+    <input type="text" value="${locked}" readonly style="background:#f0ede6; font-weight:700; color:var(--navy);">
+  `;
+  window.lockedOutlet = locked;
+
+  // History tab: same lock, only their own name/history is shown
+  const histField = document.getElementById('histOutlet').closest('.hist-controls');
+  histField.innerHTML = `<input type="text" value="${locked}" readonly style="background:#f0ede6; font-weight:700; color:var(--navy); flex:2; padding:10px 12px; border:1px solid var(--border); border-radius:8px;">`;
+  window.lockedHistOutlet = locked;
+  loadHistory();
+}
+
+function buildItemRows(){
+  const wDiv = document.getElementById('weightItems');
+  WEIGHT_ITEMS.forEach(it=>{
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <div class="item-name"><span class="no">${it.no}</span><span class="en">${it.en}</span><br><span class="cn">${it.cn}</span></div>
+      <input type="number" step="0.1" min="0" id="w_${it.no}" placeholder="0.0" oninput="updateTotal()">
+    `;
+    wDiv.appendChild(row);
+  });
+
+  const pDiv = document.getElementById('pcsItems');
+  PCS_ITEMS.forEach(it=>{
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <div class="item-name"><span class="no">${it.no}</span><span class="en">${it.en}</span><br><span class="cn">${it.cn}</span></div>
+      <input type="number" step="1" min="0" id="p_${it.no}" placeholder="0">
+    `;
+    pDiv.appendChild(row);
+  });
+}
+
+function updateTotal(){
+  let total = 0;
+  WEIGHT_ITEMS.forEach(it=>{
+    const v = parseFloat(document.getElementById('w_'+it.no).value);
+    if(!isNaN(v)) total += v;
+  });
+  document.getElementById('totalDisplay').textContent = total.toFixed(1) + ' kg';
+}
+
+function todayStr(){
+  const d = new Date();
+  return d.toISOString().slice(0,10);
+}
+
+function showTab(tab){
+  document.getElementById('tabFill').style.display = tab==='fill' ? 'block':'none';
+  document.getElementById('tabHist').style.display = tab==='history' ? 'block':'none';
+  document.getElementById('tabFillBtn').classList.toggle('active', tab==='fill');
+  document.getElementById('tabHistBtn').classList.toggle('active', tab==='history');
+  if(tab==='history'){
+    document.getElementById('histList').style.display='block';
+    document.getElementById('histDetail').style.display='none';
+  }
+}
+
+async function submitForm(){
+  const outlet = window.lockedOutlet || document.getElementById('outlet').value;
+  const date = document.getElementById('date').value;
+  const reportBy = document.getElementById('reportBy').value.trim();
+  const msgEl = document.getElementById('submitMsg');
+
+  if(!outlet || !date || !reportBy){
+    msgEl.className = 'msg err';
+    msgEl.textContent = 'Please select outlet, date, and enter your name.';
+    return;
+  }
+
+  const weights = {};
+  let total = 0;
+  WEIGHT_ITEMS.forEach(it=>{
+    const v = parseFloat(document.getElementById('w_'+it.no).value) || 0;
+    weights[it.no] = v;
+    total += v;
+  });
+  const pcs = {};
+  PCS_ITEMS.forEach(it=>{
+    const v = parseInt(document.getElementById('p_'+it.no).value) || 0;
+    pcs[it.no] = v;
+  });
+
+  const totalPig = parseInt(document.getElementById('totalPig').value) || 0;
+
+  const entry = {
+    outlet, date, reportBy,
+    weights, pcs, totalPig,
+    total: Math.round(total*10)/10,
+    submittedAt: new Date().toISOString()
+  };
+
+  try{
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(entry)
+    });
+    const data = await res.json();
+    if(data.success){
+      msgEl.className = 'msg ok';
+      msgEl.textContent = `✓ Submitted for ${outlet} on ${date}. Total: ${entry.total} kg`;
+    } else {
+      throw new Error(data.error || 'unknown error');
+    }
+  }catch(e){
+    msgEl.className = 'msg err';
+    msgEl.textContent = 'Submission failed. Check your internet connection and try again.';
+  }
+}
+
+async function loadHistory(){
+  const outlet = window.lockedHistOutlet || document.getElementById('histOutlet').value;
+  const resultsDiv = document.getElementById('histResults');
+  if(!outlet){
+    resultsDiv.innerHTML = '<div class="empty">Select an outlet to view its submission history.</div>';
+    return;
+  }
+  resultsDiv.innerHTML = '<div class="loading">Loading...</div>';
+  try{
+    const res = await fetch(`${SCRIPT_URL}?action=history&outlet=${encodeURIComponent(outlet)}`);
+    const entries = await res.json();
+    if(!entries || entries.length === 0){
+      resultsDiv.innerHTML = '<div class="empty">No submissions yet for this outlet.</div>';
+      return;
+    }
+    entries.sort((a,b)=> b.date.localeCompare(a.date));
+    resultsDiv.innerHTML = '';
+    entries.forEach(en=>{
+      const card = document.createElement('div');
+      card.className = 'entry-card';
+      card.onclick = ()=> showDetail(en);
+      card.innerHTML = `
+        <div class="entry-top"><span>${en.date}</span><span>${en.total} kg</span></div>
+        <div class="entry-sub">By ${en.reportBy} · ${en.totalPig || 0} pig(s)</div>
+      `;
+      resultsDiv.appendChild(card);
+    });
+  }catch(e){
+    resultsDiv.innerHTML = '<div class="empty">Could not load history. Check your internet connection.</div>';
+  }
+}
+
+function showDetail(entry){
+  document.getElementById('histList').style.display = 'none';
+  const detail = document.getElementById('histDetail');
+  detail.style.display = 'block';
+
+  let rows = '';
+  WEIGHT_ITEMS.forEach(it=>{
+    const v = entry.weights[it.no] || 0;
+    if(v>0) rows += `<div class="k">${it.no}. ${it.en}</div><div class="v">${v} kg</div>`;
+  });
+  PCS_ITEMS.forEach(it=>{
+    const v = entry.pcs[it.no] || 0;
+    if(v>0) rows += `<div class="k">${it.no}. ${it.en}</div><div class="v">${v} pcs</div>`;
+  });
+
+  detail.innerHTML = `
+    <button class="detail-back" onclick="backToList()">‹ Back to list</button>
+    <div class="card">
+      <div class="entry-top" style="margin-bottom:6px;"><span>${entry.outlet}</span><span>${entry.date}</span></div>
+      <div class="entry-sub" style="margin-bottom:14px;">Report by ${entry.reportBy}</div>
+      <div class="detail-grid">${rows}</div>
+      <div class="total-box" style="margin-top:14px;">
+        <span>TOTAL</span><span class="val">${entry.total} kg</span>
+      </div>
+      <div class="total-box" style="margin-top:8px; background:var(--gold);">
+        <span>TOTAL NUMBER OF PIG</span><span class="val" style="color:#fff;">${entry.totalPig || 0}</span>
+      </div>
+    </div>
+  `;
+}
+
+function backToList(){
+  document.getElementById('histList').style.display = 'block';
+  document.getElementById('histDetail').style.display = 'none';
+}
+
+populateOutlets();
+applyOutletLock();
+buildItemRows();
+document.getElementById('date').value = todayStr();
+</script>
+
+</body>
+</html>
